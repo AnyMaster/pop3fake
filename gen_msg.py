@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email import Encoders
-from os.path import isfile
+from os.path import isfile, basename
 
 SUBJECT = "You got a new E-mail with attachment!"
 FROM = "FunGuy@Source.Test"
@@ -33,7 +33,8 @@ def gen_msg(attachment):
     file_attach.set_payload(open(attachment, "rb").read())
     Encoders.encode_base64(file_attach)
     file_attach.add_header('Content-Disposition',
-                           'attachment; filename="{}"'.format(attachment))
+                           'attachment; filename="{}"'
+                           .format(basename(attachment)))
 
     msg = MIMEMultipart()
     msg['Subject'] = SUBJECT
